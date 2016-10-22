@@ -29,7 +29,7 @@ public class CoolWeatherDB {
 
     //为什么要设置为synchronized
     public synchronized static CoolWeatherDB getInstance(Context context){
-        if(coolWeatherDB!=null){
+        if(coolWeatherDB==null){
             coolWeatherDB=new CoolWeatherDB(context);
         }
         return coolWeatherDB;
@@ -55,6 +55,7 @@ public class CoolWeatherDB {
                 province.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
                 province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
+                list.add(province);
             }while (cursor.moveToNext());
         }
         if (cursor!=null){
@@ -77,7 +78,7 @@ public class CoolWeatherDB {
 
     public List<City> loadCities(int provinceId){
         List<City> list=new ArrayList<City>();
-        Cursor cursor=db.query("City",null,"provinded_id=?",new String[]{String .valueOf(provinceId)},null,null,null);
+        Cursor cursor=db.query("City",null,"province_id=?",new String[]{String .valueOf(provinceId)},null,null,null);
         if (cursor.moveToFirst()){
             do {
                 City city=new City();
