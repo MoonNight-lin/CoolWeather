@@ -93,7 +93,7 @@ public class ChooseAreaActivity extends Activity {
             titleText.setText("中国");
             currentLevel=LEVERL_PROVINCE;
         }else {
-            queryFromServer(null,"province");
+            queryFromServer(null,null,"province");
         }
     }
 
@@ -109,7 +109,7 @@ public class ChooseAreaActivity extends Activity {
             titleText.setText(selectedProvince.getProvinceName());
             currentLevel=LEVEL_CITY;
         }else {
-            queryFromServer(selectedProvince.getProvinceCode(),"city");
+            queryFromServer(selectedProvince.getProvinceCode(),null,"city");
         }
     }
     private void queryCounties() {
@@ -124,25 +124,25 @@ public class ChooseAreaActivity extends Activity {
             titleText.setText(selectedCity.getCityName());
             currentLevel=LEVEL_COUNTY;
         }else {
-            queryFromServer(selectedCity.getCityCode(),"county");
+            queryFromServer(selectedProvince.getProvinceCode(),selectedCity.getCityCode(),"county");
         }
     }
 
 
-    private void queryFromServer(final String code, final String type) {
-        String adress;
-        if (!TextUtils.isEmpty(code)){
+    private void queryFromServer(final String Province_code,final String City_code, final String type) {
+        String address = null;
+        if (!TextUtils.isEmpty(Province_code)){
             if("city".equals(type)){
-                adress="http://www.weather.com.cn/data/city3jdata/provshi/"+code+".html";
-            }else{
-                adress="http://www.weather.com.cn/data/city3jdata/station/"+code+".html";
+                address="http://www.weather.com.cn/data/city3jdata/provshi/"+Province_code+".html";
+            }else if ("county".equals(type)){
+                address="http://www.weather.com.cn/data/city3jdata/station/"+Province_code+City_code+".html";
             }
 
         }else {
-            adress="http://www.weather.com.cn/data/city3jdata/china.html";
+            address="http://www.weather.com.cn/data/city3jdata/china.html";
         }
         showProgressDialog();
-        HttpUtil.sendHttpRequest(adress, new HttpCallbackListener() {
+        HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
             @Override
             public void onFinish(String response) {
                 boolean result=false;
