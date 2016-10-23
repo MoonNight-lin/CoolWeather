@@ -1,6 +1,7 @@
 package app.coolweather.com.coolweather.util;
 
 import android.content.ComponentName;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -36,6 +37,7 @@ public class HttpUtil {
                     }
 
                 }catch (Exception e){
+                    e.printStackTrace();
                     if (listener!=null){
                         listener.onError(e);
                     }
