@@ -27,7 +27,7 @@ public class Utility {
 
     public synchronized static boolean handleProvincesResponse(CoolWeatherDB coolWeatherDB,String response){
         if (!TextUtils.isEmpty(response)){
-
+            Log.d("province", "province "+response);
             String[] allProvinces=response.split(",");
             if (allProvinces!=null&&allProvinces.length>0){
                 for (String p:allProvinces){
@@ -47,7 +47,7 @@ public class Utility {
 
     public static boolean handleCitiesResponse(CoolWeatherDB coolWeatherDB,String response,int provinceId){
         if (!TextUtils.isEmpty(response)){
-
+            Log.d("city", "city "+response);
             String[] allCities=response.split(",");
             if (allCities!=null&&allCities.length>0){
                 for (String c:allCities){
@@ -67,6 +67,7 @@ public class Utility {
     public static boolean handleCountiesResponse(CoolWeatherDB coolWeatherDB,String response,int cityId){
         if (!TextUtils.isEmpty(response)){
 
+            Log.d("COUNTY", "COUNTY "+response);
             String[] allCounties=response.split(",");
             if (allCounties!=null&&allCounties.length>0){
                 for (String c:allCounties){
@@ -85,6 +86,7 @@ public class Utility {
     }
     public static void handleWeatherResponse(Context context,String response){
         try {
+            Log.d("WeatherInf", "WeaherInf "+response);
             JSONObject jsonObject=new JSONObject(response);
             JSONObject weatherInfo=jsonObject.getJSONObject("weatherinfo");
             String cityname=weatherInfo.getString("city");
